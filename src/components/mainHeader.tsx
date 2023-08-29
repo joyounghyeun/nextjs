@@ -1,8 +1,24 @@
 "use client";
+import category from "@/app/category/page";
+import { usePathname, useRouter } from "next/navigation";
+
 import React from "react";
 import styled from "styled-components";
 
 function MainHeader() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleCateotryClick = (url: string) => {
+    router.push(url);
+  };
+
+  const categorys: Array<{ title: string; url: string }> = [
+    { title: "메인", url: "/main" },
+    { title: "분류", url: "/category" },
+    { title: "랭킹", url: "/ranking" },
+  ];
+
   return (
     <HeaderBackground>
       <SearchArea>
@@ -17,15 +33,16 @@ function MainHeader() {
         </div>
       </SearchArea>
       <CategoryBox>
-        <div style={{ width: "80px", height: "80px", background: "green" }}>
-          메인
-        </div>
-        <div style={{ width: "80px", height: "80px", background: "green" }}>
-          분류
-        </div>
-        <div style={{ width: "80px", height: "80px", background: "green" }}>
-          랭킹
-        </div>
+        {categorys.map((category: { title: string; url: string }) => {
+          return (
+            <div
+              style={{ width: "80px", height: "80px", background: "green" }}
+              onClick={() => handleCateotryClick(category.url)}
+            >
+              {category.title}
+            </div>
+          );
+        })}
       </CategoryBox>
     </HeaderBackground>
   );
